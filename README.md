@@ -67,13 +67,12 @@ Exemplo de vereficação de sessão
 ?>
 ```
 
-Exemplo para verificar conexão com database
+Exemplo de conexão com database
 
 ```php
 <?php
   try{
-      //$pdo = new PDO('oci:dbname=databasename', 'username', 'password'); oracle database
-      //$pdo = new PDO('mysql:host=hostdatabase;dbname=databasename', 'username', 'password'); mysql database
+      $pdo = new PDO('oci:dbname=databasename', 'username', 'password');
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }catch ( PDOException $e ){
       echo 'Connection Datebase Error: ' . $e->getMessage();
@@ -84,29 +83,29 @@ Exemplo para verificar conexão com database
 Exemplo da tabela SQL access_token
 
 ```sql
-CREATE TABLE `ACCESS_TOKEN` (
-  `ACCESS_ID` varchar(64) NOT NULL,
-  `ACCESS_DATE` date NOT NULL,
-  `CONNECT_ID` varchar(64) NOT NULL,
-  `DEVICE_ID` varchar(64) NOT NULL,
-  `TOKEN` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE ACCESS_TOKEN (	
+  ACCESS_ID VARCHAR2(64), 
+  ACCESS_DATE DATE, 
+  CONNECT_ID VARCHAR2(64), 
+  DEVICE_ID VARCHAR2(64), 
+  TOKEN VARCHAR2(64)
+);
 ```
 
 Exemplo da tabela SQL blocked
 
 ```sql
-CREATE TABLE `BLOCKED` (
-  `BLOCKED_ID` varchar(64) NOT NULL,
-  `BLOCKED_DATE` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE BLOCKED (	
+  BLOCKED_ID VARCHAR2(64), 
+  BLOCKED_DATE DATE
+);
 ```
 
 Exemplo da tabela SQL log_access
 
 ```sql
-CREATE TABLE `LOG_ACCESS` (
-  `LOG_ID` varchar(64) NOT NULL,
-  `LOG_DATE` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE LOG_ACCESS (	
+  LOG_ID VARCHAR2(64), 
+  LOG_DATE DATE
+);
 ```

@@ -34,11 +34,23 @@
     <!-- Content wrapper start -->
     <div class="content-wrapper">
         <div class="h-full w-full d-flex flex-column justify-content-center align-items-center">
-            <form class="form-inline w-400 mw-full" action="AuthWithTokenForEmail.php" method="post"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+            <form class="form-inline w-400 mw-full d-none" id="login" action="LoginWithPDO.php" method="post">
                 <img src="https://avatars.githubusercontent.com/u/106925507?s=200&v=4" class="img-fluid rounded-circle mr-5" alt="foto do github do criador" width="36">
                 <input type="email" class="form-control" id="email" name="email" placeholder="nome@email.com" required>
                 <input type="submit" class="btn btn-primary" value="Conectar-se com Email">
             </form>
+            <div class="alert alert-success filled-dm d-none" role="alert" id="enviado">
+              <h4 class="alert-heading">Sucesso</h4>
+              Enviamos um e-mail para sua caixa de mensagem, será necessário clicar no link para se conectar.
+            </div>
+            <div class="alert alert-success filled-dm d-none" role="alert" id="autorizado">
+              <h4 class="alert-heading">Sucesso</h4>
+              Você conseguiu se conectar com sucesso utilizando token por email.
+            </div>
+            <div class="alert alert-danger filled-dm d-none" role="alert" id="bloqueado">
+              <h4 class="alert-heading">Bloqueado</h4>
+              Sua conta está temporariamente bloqueada, tente novamente se conectar em 24h.
+            </div>
         </div>
     </div>
     <!-- Content wrapper end -->
@@ -48,5 +60,22 @@
 
   <!-- Halfmoon JS -->
   <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+  <script>
+    var baseUrl = window.location.href;
+    var notification = baseUrl.substring(baseUrl.lastIndexOf('/') + 1);
+    if(notification === "bloqueado"){
+      var element = document.getElementById("bloqueado");
+      element.classList.remove("d-none");
+    }else if(notification === "enviado"){
+      var element = document.getElementById("enviado");
+      element.classList.remove("d-none");
+    }else if(notification === "autorizado"){
+      var element = document.getElementById("autorizado");
+      element.classList.remove("d-none");
+    }else {
+      var element = document.getElementById("login");
+      element.classList.remove("d-none");
+    }
+  </script>
 </body>
 </html>

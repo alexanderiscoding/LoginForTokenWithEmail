@@ -169,8 +169,7 @@
             header("Location: /bloqueado"); 
             exit();
         }
-    }
-    if ($_GET) {
+    }else if ($_GET) {
         if (ctype_xdigit($_GET["token"]) && saveAccess() && validateToken()) {
             if(getUser($_SESSION["user"])){
                 header("Location: /autorizado"); 
@@ -182,6 +181,15 @@
             }
         } else {
             header("Location: /bloqueado"); 
+            exit();
+        }
+    }else{
+        session_start();
+        if($_SESSION["user"]){
+            header("Location: /autorizado"); 
+            exit();
+        }else{
+            header("Location: /reenviar"); 
             exit();
         }
     }

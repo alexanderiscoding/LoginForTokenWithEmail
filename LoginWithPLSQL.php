@@ -134,22 +134,37 @@
     }
     if ($_POST) {
         $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) && saveAccess() && getUser($email) && checkToken($email)) {
-            echo "autorized new token";
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) && saveAccess()) {
+            if(getUser($email)){
+                if(checkToken($email)){
+                    header("Location: /autorizado"); 
+                    exit();
+                }else{
+                    header("Location: /reenviar");
+                    exit();
+                }
+            }else{
+                header("Location: /contabloqueada"); 
+                exit();
+            }
         } else {
-            echo "blocked access";
+            header("Location: /bloqueado"); 
+            exit();
         }
     }
     if ($_GET) {
         if (ctype_xdigit($_GET["token"]) && saveAccess() && validateToken()) {
             if(getUser($_SESSION["user"])){
-                echo "autorized access";
+                header("Location: /autorizado"); 
+                exit();
             }else{
                 unset($_SESSION["user"]);
-                echo "user blocked";
+                header("Location: /contabloqueado"); 
+                exit();
             }
         } else {
-            echo "blocked access";
+            header("Location: /bloqueado"); 
+            exit();
         }
     }
 ?>

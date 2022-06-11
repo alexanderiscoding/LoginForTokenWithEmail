@@ -152,9 +152,19 @@
     }
     if ($_POST) {
         $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) && saveAccess() && getUser($email) && checkToken($email)) {
-            header("Location: /enviado"); 
-            exit();
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) && saveAccess()) {
+            if(getUser($email)){
+                if(checkToken($email)){
+                    header("Location: /autorizado"); 
+                    exit();
+                }else{
+                    header("Location: /reenviar");
+                    exit();
+                }
+            }else{
+                header("Location: /contabloqueada"); 
+                exit();
+            }
         } else {
             header("Location: /bloqueado"); 
             exit();
@@ -167,7 +177,7 @@
                 exit();
             }else{
                 unset($_SESSION["user"]);
-                header("Location: /bloqueado"); 
+                header("Location: /contabloqueado"); 
                 exit();
             }
         } else {

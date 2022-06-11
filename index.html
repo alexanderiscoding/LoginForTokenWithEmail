@@ -34,7 +34,7 @@
     <!-- Content wrapper start -->
     <div class="content-wrapper">
         <div class="h-full w-full d-flex flex-column justify-content-center align-items-center">
-            <form class="form-inline w-400 mw-full d-none" id="login" action="LoginWithPDO.php" method="post">
+            <form class="form-inline w-400 mw-full d-none" id="login" action="LoginWithAPI.php" method="post">
                 <img src="https://avatars.githubusercontent.com/u/106925507?s=200&v=4" class="img-fluid rounded-circle mr-5" alt="foto do github do criador" width="36">
                 <input type="email" class="form-control" id="email" name="email" placeholder="nome@email.com" required>
                 <input type="submit" class="btn btn-primary" value="Conectar-se com Email">
@@ -49,7 +49,15 @@
             </div>
             <div class="alert alert-danger filled-dm d-none" role="alert" id="bloqueado">
               <h4 class="alert-heading">Bloqueado</h4>
+              Seu acesso está temporariamente bloqueado, tente novamente se conectar em 24h.
+            </div>
+            <div class="alert alert-danger filled-dm d-none" role="alert" id="contabloqueada">
+              <h4 class="alert-heading">Bloqueado</h4>
               Sua conta está temporariamente bloqueada, tente novamente se conectar em 24h.
+            </div>
+            <div class="alert alert-secondary filled-dm d-none" role="alert" id="reenviar">
+              <h4 class="alert-heading">Aviso</h4>
+              Seu token de acesso foi gerado e enviado para seu email, tente novamente em 10min.
             </div>
         </div>
     </div>
@@ -71,6 +79,12 @@
       element.classList.remove("d-none");
     }else if(notification === "autorizado"){
       var element = document.getElementById("autorizado");
+      element.classList.remove("d-none");
+    }else if(notification === "contabloqueada"){
+      var element = document.getElementById("contabloqueada");
+      element.classList.remove("d-none");
+    }else if(notification === "reenviar"){
+      var element = document.getElementById("reenviar");
       element.classList.remove("d-none");
     }else {
       var element = document.getElementById("login");

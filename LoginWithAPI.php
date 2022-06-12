@@ -2,7 +2,7 @@
     function sendPost($crud, $table_name, $column_id, $column_name, $column_value, $column_ip, $column_date, $column_email, $column_device, $column_token) {
 
         $host = "http://localhost:3000";
-        //Change for host from CRUDWithTokenForFirebase or CRUDWithTokenForPlanetScale in https://github.com/alexanderiscoding
+        //Change for host from CRUDWithTokenForFirebase in https://github.com/alexanderiscoding
         switch ($crud) {
             case 0:
                 $url = "$host/api/create";
@@ -95,7 +95,7 @@
             "Authorization: Bearer 7f59ba5f69d5b4e588e0ab0d4f8e1634",
             "Content-Type: application/json",
         );
-        //Change after Bearer for same token from CRUDWithTokenForFirebase or CRUDWithTokenForPlanetScale in https://github.com/alexanderiscoding
+        //Change after Bearer for same token from CRUDWithTokenForFirebase in https://github.com/alexanderiscoding
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);

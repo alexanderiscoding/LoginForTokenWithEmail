@@ -1,4 +1,24 @@
 <?php
+    //Use this https://github.com/alexanderiscoding/SendEmailWithToken for sends emails
+    function sendEmail($email, $token) {
+        $url = "https://examplename.vercel.app/mailjet";
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $data = '{
+            from_email: "github@alexanderiscoding.com",
+            from_name: "Alexanderiscoding",
+            to_email: "'.$email.'",
+            to_name: "Alexanderiscoding",
+            subject_email: "🔐 Token de Acesso via E-mail",
+            content_email:  "<a href=\"https://nameexample.com/LoginWithAPI.php?token='.$token.'\">Clique aqui para acessar sua conta</a>",
+            token: "a8919de3b6f0f44a8799c8854deb3e43",
+        }';
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_exec($curl);
+        curl_close($curl);
+    }
     function getRealUserIp(){
         switch(true){
             case (!empty($_SERVER['HTTP_X_REAL_IP'])) : return $_SERVER['HTTP_X_REAL_IP'];
@@ -8,7 +28,7 @@
         }
     }
     function saveAccess(){
-        require('connection.php'); //$pdo connection variable
+        $pdo = new PDO('oci:dbname=databasename', 'username', 'password'); //change for this server oracle
         $ip = getRealUserIp();
         $log_id = hash('ripemd256', $ip);
         $checklogs = $pdo->prepare("CALL AUTHWITHTOKEN.DELETE_OLDERS_ACCESS()");
@@ -27,7 +47,7 @@
         }
     }
     function getUser($email){
-        require('connection.php'); //$pdo connection variable
+        $pdo = new PDO('oci:dbname=databasename', 'username', 'password'); //change for this server oracle
         $date_timezone = new DateTimeZone("America/Sao_Paulo");
         $date_time = new DateTime("now", $date_timezone);
         $date_now = $date_time->format("d/m/Y");
@@ -49,7 +69,7 @@
         }
     }
     function newToken($connect_id) {
-        require('connection.php'); //$pdo connection variable
+        $pdo = new PDO('oci:dbname=databasename', 'username', 'password'); //change for this server oracle
         $date_timezone = new DateTimeZone("America/Sao_Paulo");
         $date_time = new DateTime("now", $date_timezone);
         $date_time->modify("+10 minutes");
@@ -66,12 +86,10 @@
             ':device_id' => $device_id,
             ':token' => $token
         ));
-        //function send email
-        //require('send_email.php'); 
-        //sendEmail($email, $token);
+        //sendEmail($email, $token); activate this server in vercel
     }
     function checkToken($email) {
-        require('connection.php'); //$pdo connection variable
+        $pdo = new PDO('oci:dbname=databasename', 'username', 'password'); //change for this server oracle
         $date_timezone = new DateTimeZone("America/Sao_Paulo");
         $date_time = new DateTime("now", $date_timezone);
         $date_now = $date_time->format("d/m/Y H:i");
@@ -95,7 +113,7 @@
         }
     }
     function validateToken(){
-        require('connection.php'); //$pdo connection variable
+        $pdo = new PDO('oci:dbname=databasename', 'username', 'password'); //change for this server oracle
         $date_timezone = new DateTimeZone("America/Sao_Paulo");
         $date_time = new DateTime("now", $date_timezone);
         $date_now = $date_time->format("d/m/Y H:i");

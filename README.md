@@ -1,60 +1,12 @@
 ## 🚀 Usage
 
-Iniciar servidor PHP Localmente
+Initialize server local
 
 ```cmd
 php -S localhost:3000
 ```
-Exemplo de função para enviar e-mail
 
-```php
-<?php
-  function sendEmail($email, $token) {
-      $url = "https://api.sendgrid.com/v3/mail/send";
-
-      $curl = curl_init($url);
-      curl_setopt($curl, CURLOPT_URL, $url);
-      curl_setopt($curl, CURLOPT_POST, true);
-      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-      $headers = array(
-      "Accept: application/json",
-      "Authorization: Bearer token-api",
-      "Content-Type: application/json",
-      );
-      curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-      $data = '{
-          "personalizations": [
-              {
-                  "to": [
-                      {
-                          "email": "'.$email.'"
-                      }
-                  ]
-              }
-          ],
-          "from": {
-              "email": "email registered in sendgrid",
-              "name": "name from preference"
-          },
-          "subject": "🔐 Token de Acesso via E-mail",
-          "content": [
-              {
-                  "type": "text/html",
-                  "value": "<a href=\"https://nameexample.com/AuthWithTokenForEmail.php?token='.$token.'\">Clique aqui para acessar sua conta</a>"
-              }
-          ]
-      }';
-
-      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-      curl_exec($curl);
-      curl_close($curl);
-  }
-?>
-```
-
-Exemplo de vereficação de sessão
+Example check user logged
 
 ```php
 <?php
@@ -67,7 +19,7 @@ Exemplo de vereficação de sessão
 ?>
 ```
 
-Exemplo de conexão com database
+Example check connection database
 
 ```php
 <?php
@@ -80,7 +32,7 @@ Exemplo de conexão com database
 ?>
 ```
 
-Exemplo da tabela SQL access_token
+Table SQL for access_token
 
 ```sql
 CREATE TABLE ACCESS_TOKEN (	
@@ -92,7 +44,7 @@ CREATE TABLE ACCESS_TOKEN (
 );
 ```
 
-Exemplo da tabela SQL blocked
+Table SQL for blocked
 
 ```sql
 CREATE TABLE BLOCKED (	
@@ -101,7 +53,7 @@ CREATE TABLE BLOCKED (
 );
 ```
 
-Exemplo da tabela SQL log_access
+Table SQL for log_access
 
 ```sql
 CREATE TABLE LOG_ACCESS (	
